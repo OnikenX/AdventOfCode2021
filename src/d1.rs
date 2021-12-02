@@ -23,19 +23,15 @@ pub fn p1() {
 
 #[derive(Clone, Debug)]
 struct Group {
-    pub group: i32,
     pub valor: i32,
     pub counter: i32,
-    pub valores : Vec<i32>
 }
 
 impl Group {
-    pub fn new(group: i32) -> Group {
+    pub fn new() -> Group {
         Group {
-            group: group,
             valor: 0,
             counter: 0,
-            valores : vec![]
         }
     }
     pub fn increment(&mut self, amount: i32) -> bool {
@@ -43,7 +39,6 @@ impl Group {
             false
         } else {
             self.valor += amount;
-            self.valores.push(amount);
             self.counter += 1;
             true
         }
@@ -54,7 +49,6 @@ pub fn p2() {
     let d1 = read_file();
     let mut groups = VecDeque::<Group>::new();
     groups.reserve(4);
-    let mut group_count = 0;
     let mut increase_counter: usize = 0;
     let mut last_group_value = -1;
     let compare_values = |actual_group : &Group, increase_counter : &mut usize, last_group_value : &mut i32|
@@ -65,8 +59,8 @@ pub fn p2() {
     }};
     for line in d1.lines() {
         let current_line = line.parse::<i32>().unwrap();
-        group_count += 1;
-        groups.push_back(Group::new(group_count));
+      
+        groups.push_back(Group::new());
         let mut remove = false;
         for actual_group in &mut groups {
             if !actual_group.increment(current_line) {
@@ -85,5 +79,6 @@ pub fn p2() {
         if group.counter == 3 {
         compare_values(group,&mut increase_counter,&mut last_group_value);}
     }
-    println!("Number of lines increased:\n{}", increase_counter);
+
+    println!("Number of lines increased: {}", increase_counter);
 }
