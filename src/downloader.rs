@@ -37,3 +37,10 @@ pub fn download(year: i32, day: i32, token: &str) -> String {
     }
     input
 }
+
+
+pub fn head(lines: &Vec<&str>, size : usize) {
+    for i in 0..size {
+        println!("{}", lines[i]);
+    }
+}
