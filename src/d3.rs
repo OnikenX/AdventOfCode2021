@@ -1,27 +1,9 @@
-
-
 use std::char;
 
 pub fn p1(input: String) {
-    //     let input = "00100
-    // 11110
-    // 10110
-    // 10111
-    // 10101
-    // 01111
-    // 00111
-    // 11100
-    // 10000
-    // 11001
-    // 00010
-    // 01010"
-    //         .to_string();
-
     let lines = input.lines().collect::<Vec<_>>();
-    println!("lines.len(): {}", lines.len());
-    let one_zero = "10".chars().collect::<Vec<_>>();
-    let one = one_zero[0];
-    let zero = one_zero[1];
+    let one = '1';
+    let zero = '0';
     let mut digits = vec![0; lines[0].len()];
     for line in &lines {
         if line.is_ascii() {
@@ -39,7 +21,6 @@ pub fn p1(input: String) {
     let mut gamma_rate = 0;
     let mut epsilon_rate = 0;
     digits.reverse();
-    let digits = digits;
     for (pos, digit) in digits.iter().enumerate() {
         if *digit > (&lines.len() - *digit) {
             gamma_rate |= 2u32.pow(pos as u32);
@@ -49,7 +30,7 @@ pub fn p1(input: String) {
     }
 
     println!(
-        "gamma_rate: {0:b}/{0}; epsilon_rate: {1:b}/{1}; answer: {2}",
+        "gamma_rate: {0:b}/{0}; epsilon_rate: {1:b}/{1}; answer: {2:b}/{2}",
         gamma_rate,
         epsilon_rate,
         gamma_rate * epsilon_rate
@@ -124,7 +105,6 @@ pub fn p2(input: String) {
 }
 
 fn remove_all_with_char_at_char_pos(vec: &mut Vec<&str>, char_pos: usize, char: &char) {
-    
     let mut to_delete = vec![];
     for (pos, bin) in vec.iter().enumerate() {
         let chars = bin.chars().collect::<Vec<_>>();
@@ -157,3 +137,5 @@ fn fill_list<'a>(lines: &Vec<&'a str>, to_save: &mut Vec<&'a str>, to_get: &char
         }
     }
 }
+
+
