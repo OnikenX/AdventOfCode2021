@@ -1,5 +1,3 @@
-use std::char::ToLowercase;
-
 pub fn p1(input: String) {
     geral(input, true);
 }
