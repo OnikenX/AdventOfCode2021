@@ -9,5 +9,5 @@ mod downloader;
 
 fn main() {
     // let input = downloader::download(2021, 5, &downloader::get_token());
-    d6::p1();
+    d6::p2();
 }

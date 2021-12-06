@@ -1,4 +1,4 @@
-use std::os::unix::prelude::FileExt;
+use std::{os::unix::prelude::FileExt, fs::read_to_string};
 
 use crate::downloader::{self, get_token};
 
@@ -9,85 +9,26 @@ use crate::downloader::{self, get_token};
 // depois de um dia seria 6 e cria um novo laternfish com o counter a 8
 //fish 1 - 5 / fish 2 - 7
 
-pub fn p1() {
-    // optimized();
-    added_new_fish(14);
-    return;
-    // let input = downloader::download(2021, 6, &get_token());
-    let input = "3,4,3,1,2".to_string();
-
-    println!("{}", input);
-    let mut lanternfish = vec![];
-    for x in input.split(",") {
-        let x = x.trim();
-        lanternfish.push(x.parse::<i32>().unwrap());
+pub fn solver(days : i32){
+    let input = 
+    downloader::download(2021, 6, &get_token());
+    //0/1/2/3/4/5/6/7/8
+    let mut state = [0usize; 9];
+    for item in input.split(',') {
+        let x = item.trim();
+        let index = x.parse::<i32>().unwrap();
+        state[index as usize] += 1;
     }
-    let days = 18;
-
-    for day in 1..=days {
-        let mut to_add = 0;
-        for fish in &mut lanternfish {
-            if *fish == 0 {
-                to_add += 1;
-                *fish = 6;
-            } else {
-                *fish -= 1;
-            }
+    let mut prev = state[8];
+    let mut actual = 0;
+    for day in 1..=days{
+        for index in (0..state.len()-1).rev(){
+            actual = state[index];
+            state[index] = prev;
+            prev=actual;
         }
-        while to_add != 0 {
-            lanternfish.push(8);
-            to_add -= 1;
-        }
-        println!("day: {}; size: {}; {}%", &day, lanternfish.len(), (day as f32/days as f32)*100.0f32);
+        state[6] += actual;
+        state[8] = actual;
     }
-    println!("{}", lanternfish.len());
-}
-
-
-pub fn optimized(){
-    let input = "3,4,3,1,2".to_string();
-    println!("{}", input);
-    let mut lanternfish = vec![];
-    for x in input.split(",") {
-        let x = x.trim();
-        lanternfish.push(x.parse::<i32>().unwrap());
-    }
-    let days  = 256;
-    let n_lanternfish = 0u128;
-    for fish in &mut lanternfish{
-        *fish = *fish-days;
-        println!("{} -> {}",(*fish), ((*fish)/6).abs());
-        
-    }
-    
-
-    //3,4,3,1,2
-    // depois de 2
-    //3-2=1,4-2=2,3-2=1,1-2=-1,2-2=0
-    //1,2,1,-1,0
-    //1,2,1,6-1=5,1,2,8
-
-    //depois de 18
-    //3-18, 4-18,
-
-    let x = 26984457539u128;
-}
-
-
-fn added_new_fish(days_remaning : i32) -> u128{
-    //after the criation of a new one, after 14 days it creates an pair
-    //these new ones create new ones in doubles
-    let mut y = 0;
-    let x = 1;
-    for day in 1..=days_remaning{
-        y = if day <= 8{
-             0
-        }else if day > 8 && day <= 14{
-            1
-        }else{
-            x/6 + 1
-        };
-    }
-    println!("{:?}", y);
-    return y;
+    println!("{:?} - {}", state, state.iter().sum::<usize>());
 }
