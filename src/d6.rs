@@ -18,7 +18,7 @@ pub fn solver(days: i32) {
     }
     let mut prev = state[8];
     let mut actual = 0;
-    for day in 1..=days {
+    for _day in 1..=days {
         for index in (0..state.len() - 1).rev() {
             actual = state[index];
             state[index] = prev;
