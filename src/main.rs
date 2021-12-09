@@ -7,10 +7,10 @@ mod downloader;
 // mod d5;
 // mod d6;
 // mod d7;
-mod d8;
+// mod d8;
+mod d9;
 
 fn main() {
-    // let input = downloader::download(2021, 5, &downloader::get_token());
-    d8::p2();
+    d9::p2();
 
 }
