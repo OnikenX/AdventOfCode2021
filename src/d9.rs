@@ -1,22 +1,15 @@
 use crate::downloader::{download, get_token};
 use std::{collections::HashMap, panic, usize, vec};
 
-pub(crate) fn p1() {
-    solution(true);
+pub(crate) fn p1(input : String) {
+    solution(true, input);
 }
-pub(crate) fn p2() {
-    solution(false);
+pub(crate) fn p2(input : String) {
+    solution(false, input);
 }
 
-fn solution(part1: bool) {
-    let input = 
-"2199943210
-3987894921
-9856789892
-8767896789
-9899965678"
-        .to_string();
-    let input = download(2021, 9, &get_token());
+fn solution(part1: bool, input : String) {
+
     let mut map = vec![];
 
     //get values in the map

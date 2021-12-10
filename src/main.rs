@@ -1,3 +1,7 @@
+use std::time::Instant;
+
+use crate::downloader::{download, get_token};
+
 mod downloader;
 
 // mod d1;
@@ -8,9 +12,13 @@ mod downloader;
 // mod d6;
 // mod d7;
 // mod d8;
-mod d9;
+// mod d9;
+mod d10;
 
 fn main() {
-    d9::p2();
+    let input = download(2021, 9, &get_token());
+    let start = Instant::now();
+    d10::p1(/* input */);
+    println!("timetaken in macros: {}", (Instant::now() - start).as_micros());
 
 }
