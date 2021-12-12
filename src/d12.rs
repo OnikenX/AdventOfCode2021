@@ -77,7 +77,13 @@ impl MapFeactures for Map {
     }
 }
 
-pub fn p1() {
+pub fn p1(){
+    solution(true);
+}pub fn p2(){
+    solution(false);
+}
+
+fn solution(part1 : bool) {
     let input = "\
 start-A
 start-b
@@ -94,16 +100,16 @@ b-end
         let points = line.split('-').collect::<Vec<_>>();
         map.add_connections(&points);
     }
-    find_paths(&map);
+    find_paths(&map, part1);
 }
 
-fn find_paths(map: &Map) {
+fn find_paths(map: &Map, part1 : bool) {
     let start = map.get(START).unwrap();
     let paths: Paths = Paths::new();
     for ligacao in start {
         let next = Node::new_point(ligacao, Some(paths.start.clone()));
         (*paths.start).borrow_mut().nexts.push(next.clone());
-        expand_path(map, next);
+        expand_path(map, next, part1);
     }
     println!("Possible paths: {}", verify_lines_completed(paths.start));
 }
@@ -116,25 +122,30 @@ fn is_small_cave(name: &str) -> bool {
     }
 }
 
-fn expand_path(map: &Map, point: Point) {
+fn expand_path(map: &Map, point: Point, passed_twice_small_cave: bool) {
     let this_name = point.as_ref().borrow().name.clone();
     if this_name == END {
         return;
     }
     let hashmap = map.get(&this_name).unwrap().clone();
     for cave in hashmap {
+        let mut passed_twice_small_cave = passed_twice_small_cave;
         if cave == START {
             continue;
         }
         if is_small_cave(&cave) {
-            if caved_has_visited_before(&cave, (*point).borrow().prev_ref.clone().unwrap()) {
-                continue;
+            if cave_has_visited_before(&cave, (*point).borrow().prev_ref.clone().unwrap()) {
+                if passed_twice_small_cave {
+                    continue;
+                } else {
+                    passed_twice_small_cave = true;
+                }
             }
         }
         let next = Node::new_point(&cave, Some(point.clone()));
         (*point).borrow_mut().nexts.push(next.clone());
         if cave != END {
-            expand_path(map, next);
+            expand_path(map, next, passed_twice_small_cave);
         }
     }
 }
@@ -166,7 +177,7 @@ fn sequence_string(point: Rc<RefCell<Node>>) -> String {
     }
 }
 
-fn caved_has_visited_before(cave: &str, prev_point: Point) -> bool {
+fn cave_has_visited_before(cave: &str, prev_point: Point) -> bool {
     let prev_name = prev_point.as_ref().borrow().name.clone();
     if prev_name == cave {
         return true;
@@ -174,5 +185,5 @@ fn caved_has_visited_before(cave: &str, prev_point: Point) -> bool {
     if prev_name == START {
         return false;
     }
-    return caved_has_visited_before(cave, prev_point.as_ref().borrow().prev_ref.clone().unwrap());
+    return cave_has_visited_before(cave, prev_point.as_ref().borrow().prev_ref.clone().unwrap());
 }
