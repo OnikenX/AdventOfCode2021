@@ -15,11 +15,12 @@ mod downloader;
 // mod d9;
 mod d10;
 mod d11;
+mod d12;
 
 fn main() {
     // let input = download(2021, 9, &get_token());
     let start = Instant::now();
-    d11::p2();
+    d12::p1();
     println!("timetaken in macros: {}", (Instant::now() - start).as_micros());
 
 }
