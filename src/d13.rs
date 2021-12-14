@@ -61,7 +61,7 @@ fold along x=5
             coords.insert(coord);
         }
         while let Some(coord) = coords_to_remove.pop() {
-            coords.remove(&coord);
+             coords.remove(&coord);
         }
     };
     let mut first_time = true;

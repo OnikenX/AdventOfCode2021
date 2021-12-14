@@ -17,11 +17,12 @@ mod d10;
 mod d11;
 mod d12;
 mod d13;
+mod d14;
 
 fn main() {
     // let input = download(2021, 9, &get_token());
     let start = Instant::now();
-    d13::p1();
+    d14::p1();
     println!("timetaken in macros: {}", (Instant::now() - start).as_micros());
 
 }
