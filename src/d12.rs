@@ -77,13 +77,13 @@ impl MapFeactures for Map {
     }
 }
 
-pub fn p1(){
-    solution(true);
-}pub fn p2(){
-    solution(false);
+pub fn p1(input : String){
+    solution(true, input);
+}pub fn p2(input : String){
+    solution(false, input);
 }
 
-fn solution(part1 : bool) {
+fn solution(part1 : bool, input : String) {
     let input = "\
 start-A
 start-b
@@ -94,7 +94,6 @@ A-end
 b-end
 "
     .to_string();
-    let input = download(2021, 12, &get_token());
     let mut map = Map::new();
     for line in input.lines() {
         let points = line.split('-').collect::<Vec<_>>();
