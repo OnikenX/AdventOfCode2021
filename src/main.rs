@@ -23,7 +23,7 @@ mod d15;
 fn main() {
     let input = download(2021, 15, &get_token());
     let start = Instant::now();
-    d15::p1(&input);
-    println!("timetaken in macros: {}", (Instant::now() - start).as_micros());
+    d15::p2(&input);
+    println!("timetaken in microsegundos: {}", (Instant::now() - start).as_micros());
 
 }
